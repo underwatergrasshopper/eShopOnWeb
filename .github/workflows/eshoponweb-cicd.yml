@@ -54,6 +54,9 @@ jobs:
     needs: buildandtest
     environment:
       name: "Development"
+    permissions:
+      id-token: write
+      contents: read
     steps:
       #Download the publish files created in previous job
       - name: Download artifact from build job
