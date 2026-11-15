@@ -7,20 +7,23 @@ var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appServicePlanName
   location: location
+  kind: 'linux'
+  properties: {
+    reserved: true
+  }
   sku: {
     name: sku
-    tier: 'Free'
   }
 }
 
 resource appService 'Microsoft.Web/sites@2022-09-01' = {
   name: webAppName
-  kind: 'app'
+  kind: 'app,linux'
   location: location
   properties: {
     serverFarmId: appServicePlan.id
     siteConfig: {
-      netFrameworkVersion: 'v8.0'
+      linuxFxVersion: 'DOTNETCORE|8.0'
       appSettings: [
         {
           name: 'ASPNETCORE_ENVIRONMENT'
